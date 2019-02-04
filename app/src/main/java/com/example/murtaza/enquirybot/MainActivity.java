@@ -20,30 +20,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startActivity(new Intent(MainActivity.this, ChatWindow.class));
-
-        Button btn_refresh = (Button)findViewById(R.id.btn_refresh);
-        btn_refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String wifi_ssid = getCurrentSsid(getApplicationContext());
-                if(wifi_ssid!=null){
-                    Toast.makeText(MainActivity.this, "WIFI connected NAME "+wifi_ssid, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        Button btn_refresh = (Button)findViewById(R.id.btn_refresh);
+//        btn_refresh.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String wifi_ssid = getCurrentSsid(getApplicationContext());
+//                if(wifi_ssid!=null){
+//                    Toast.makeText(MainActivity.this, "WIFI connected NAME "+wifi_ssid, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
     }
 
-    public static String getCurrentSsid(Context context) {
-        String ssid = null;
-        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (networkInfo.isConnected()) {
-            final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            final WifiInfo connectionInfo = wifiManager.getConnectionInfo();
-            if (connectionInfo != null && !TextUtils.isEmpty(connectionInfo.getSSID())) {
-                ssid = connectionInfo.getSSID();
-            }
-        }
-        return ssid;
-    }
+//    public static String getCurrentSsid(Context context) {
+//        String ssid = null;
+//        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+//        if (networkInfo.isConnected()) {
+//            final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+//            final WifiInfo connectionInfo = wifiManager.getConnectionInfo();
+//            if (connectionInfo != null && !TextUtils.isEmpty(connectionInfo.getSSID())) {
+//                ssid = connectionInfo.getSSID();
+//            }
+//        }
+//        return ssid;
+//    }
 }
