@@ -19,6 +19,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,13 +55,11 @@ public class ChatWindow extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(getApplicationContext(), response.substring(0, 10), Toast.LENGTH_SHORT).show();
                             updateUI("response", response);
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                             updateUI("error", error.getMessage());
                         }
                     }){
@@ -76,27 +78,30 @@ public class ChatWindow extends AppCompatActivity {
     }
 
     private void updateUI(String type, String message) {
+        View view = inflater.inflate(R.layout.chat, null);
         if (type.equals("message")) {
             TextView enterMessage = findViewById(R.id.enterMessage);
             enterMessage.setText("");
-            View view = inflater.inflate(R.layout.chat, null);
             TextView text = view.findViewById(R.id.message);
             text.setText(message);
             view.setBackgroundColor(0xffffffff);
             chatScroll.addView(view);
         } else if (type.equals("response")) {
-            View view = inflater.inflate(R.layout.chat, null);
             TextView text = view.findViewById(R.id.message);
             text.setText(message);
             view.setBackgroundColor(0xfaedb000);
             chatScroll.addView(view);
         } else if (type.equals("error")) {
-            View view = inflater.inflate(R.layout.chat, null);
             TextView text = view.findViewById(R.id.message);
             message = "error"+message;
             text.setText(message);
             view.setBackgroundColor(0x22222222);
             chatScroll.addView(view);
         }
+        Date currentTime = Calendar.getInstance().getTime();
+        DateFormat df = new SimpleDateFormat("h:mm a");
+        String date = df.format(currentTime);
+        TextView text = view.findViewById(R.id.time);
+        text.setText(date);
     }
 }
