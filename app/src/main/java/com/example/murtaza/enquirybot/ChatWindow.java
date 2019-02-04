@@ -3,9 +3,11 @@ package com.example.murtaza.enquirybot;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -80,6 +82,9 @@ public class ChatWindow extends AppCompatActivity {
     private void updateUI(String type, String message) {
         View view = inflater.inflate(R.layout.chat, null);
         if (type.equals("message")) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            params.gravity = Gravity.START;
+            view.setLayoutParams(params);
             TextView enterMessage = findViewById(R.id.enterMessage);
             enterMessage.setText("");
             TextView text = view.findViewById(R.id.message);
@@ -87,6 +92,9 @@ public class ChatWindow extends AppCompatActivity {
             view.setBackgroundColor(0xffffffff);
             chatScroll.addView(view);
         } else if (type.equals("response")) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            params.gravity = Gravity.END;
+            view.setLayoutParams(params);
             TextView text = view.findViewById(R.id.message);
             text.setText(message);
             view.setBackgroundColor(0xfaedb000);
