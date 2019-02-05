@@ -11,6 +11,7 @@
     tools:context=".ChatWindow">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="100">
@@ -18,7 +19,7 @@
         <LinearLayout
             android:id="@+id/chat_scroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="#E8EFEF"
             android:orientation="vertical"
             android:padding="10dp">

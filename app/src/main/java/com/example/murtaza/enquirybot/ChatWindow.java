@@ -32,7 +32,7 @@ public class ChatWindow extends AppCompatActivity {
 
     LinearLayout chatScroll;
     LayoutInflater inflater;
-
+    ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,8 @@ public class ChatWindow extends AppCompatActivity {
         final TextView enterMessage = findViewById(R.id.enterMessage);
         final RequestQueue queue = Volley.newRequestQueue(this);
         final String url ="http://13.233.158.98:8888/chat/";
+        scrollView = findViewById(R.id.scrollView);
+
 
         chatScroll = findViewById(R.id.chat_scroll);
         inflater =  (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -57,12 +59,13 @@ public class ChatWindow extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            updateUI("response", response);
+                            updateUI("response", response.trim());
+                            scrollToBottom();
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            updateUI("error", error.getMessage());
+//                            updateUI("error", error.getMessage());
                         }
                     }){
                     @Override
@@ -74,9 +77,19 @@ public class ChatWindow extends AppCompatActivity {
                     }};
                     queue.add(stringRequest);
                 }
+                scrollToBottom();
             }
         });
 
+    }
+
+    private void scrollToBottom(){
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
     }
 
     private void updateUI(String type, String message) {
@@ -84,19 +97,25 @@ public class ChatWindow extends AppCompatActivity {
         if (type.equals("message")) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
             params.gravity = Gravity.START;
+            params.bottomMargin = 12;
+            params.rightMargin = 40;
             view.setLayoutParams(params);
             TextView enterMessage = findViewById(R.id.enterMessage);
             enterMessage.setText("");
             TextView text = view.findViewById(R.id.message);
             text.setText(message);
+            text.setPadding(0,0,10, 0);
             view.setBackgroundColor(0xffffffff);
             chatScroll.addView(view);
         } else if (type.equals("response")) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
             params.gravity = Gravity.END;
+            params.bottomMargin = 12;
+            params.leftMargin = 40;
             view.setLayoutParams(params);
             TextView text = view.findViewById(R.id.message);
             text.setText(message);
+            text.setPadding(10, 0, 0, 0);
             view.setBackgroundColor(0xfaedb000);
             chatScroll.addView(view);
         } else if (type.equals("error")) {
