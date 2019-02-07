@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
         </activity>
-        <activity android:name=".ChatWindow">
+        <activity android:name=".ChatWindow"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
